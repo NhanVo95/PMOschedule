@@ -1,0 +1,65 @@
+extends layout
+
+block stylesheet
+  link(rel='stylesheet' href='/css/homepage.css')
+
+block content
+  div
+    #wrapper
+      div(style='margin-bottom: 10px')
+        img(src='/images/logo.png' style='width: 100px; margin: 0.5rem' alt='HCMUTE logo')
+        img(src='/images/pmo.png' style='width: 100px; margin: 0.5rem' alt='PMO logo')
+      h2 PRESS AND MEDIA OFFICE
+    .content-wrapper
+      //- SECTION - Card Studio
+      .news-card
+        a.news-card__card-link(href='/studio')
+        img.news-card__image(src='/images/HCMUTE_Studio.png' alt='HCMUTE Studio')
+        .news-card__text-wrapper
+          h2.news-card__title Studio
+          //- <div class="news-card__post-date">Jan 29, 2018</div>
+          //- .news-card__details-wrapper
+          //-   p.news-card__excerpt
+          //-     | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam
+          //-     | obcaecati ex natus nulla rem sequi laborum quod fugit&mldr;
+          //
+            <a href="#" class="news-card__read-more"
+            >Read more <i class="fas fa-long-arrow-alt-right"></i
+            ></a>
+      //- !SECTION - Card Studio
+
+      //- SECTION - Card Ho tro truyen thong
+      .news-card
+        a.news-card__card-link(href='/support')
+        img.news-card__image(src='/images/HCMUTE_Flycam.png' alt='HCMUTE Flycam')
+        .news-card__text-wrapper
+          h2.news-card__title Hỗ trợ truyền thông
+          //- <div class="news-card__post-date">Jan 29, 2018</div>
+          //- .news-card__details-wrapper
+          //-   p.news-card__excerpt
+          //-     | Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          //-     | Officiis beatae&mldr;
+          //
+            <a href="#" class="news-card__read-more"
+            >Read more <i class="fas fa-long-arrow-alt-right"></i
+            ></a>
+      //- !SECTION - Card Ho tro truyen thong
+
+      //- SECTION - Card Bandroll
+      .news-card
+        a.news-card__card-link(href='/bandroll')
+        img.news-card__image(src='/images/HCMUTE_Flycam.png' alt='HCMUTE Flycam')
+        .news-card__text-wrapper
+          h2.news-card__title Bandroll, cờ, phướn
+          //- <div class="news-card__post-date">Jan 29, 2018</div>
+          //- .news-card__details-wrapper
+          //-   p.news-card__excerpt
+          //-     | Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          //-     | Officiis beatae&mldr;
+          //
+            <a href="#" class="news-card__read-more"
+            >Read more <i class="fas fa-long-arrow-alt-right"></i
+            ></a>
+      //- !SECTION - Card Bandroll
+    .footer
+      p PRESS AND MEDIA OFFICE

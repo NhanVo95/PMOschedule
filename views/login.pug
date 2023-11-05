@@ -1,0 +1,50 @@
+extends layout
+
+block stylesheet
+  link(rel='stylesheet' href='/css/login.css')                                    
+
+block content
+  #wrapper
+    div(style='margin-bottom: 10px;')
+      img(src='/images/logo.png' style='width:90px' alt='HCMUTE')
+      img(src='/images/pmo.png' style='width:90px' alt='PMO')
+
+    h2 LOGIN REGISTER THE STUDIO SCHEDULE
+
+    if site == "login"
+      form(style='margin-top: 50px;' method='post' action="/login")
+        if data != ""
+          label#error() * !{data} *
+
+        if email != ""
+          input(type='text' name='email' placeholder='EMAIL' value=email pattern="([A-Za-z.]*)@hcmute.edu.vn")
+          input(type='password' name='password' placeholder='PASSWORD' autofocus='')
+        else
+          input(type='text' name='email' placeholder='EMAIL' autofocus='' pattern="([A-Za-z.]*)@hcmute.edu.vn")
+          input(type='password' name='password' placeholder='PASSWORD')
+        input(type='hidden' name='redirect' value=redirect)
+        input(type='submit' value='SIGN IN')
+
+    else if site == "changepass"
+      form(style='margin-top: 50px;' method='post' action="/login/change?redirect")
+        if data != ""
+          label#error() * !{data} *
+
+        input(type='password' name='oldPassword' placeholder='Mật khẩu cũ' autofocus='')
+        input(type='password' name='newPassword' placeholder='Mật khẩu mới')
+        input(type='password' name='retypePassword' placeholder='Nhập lại mật khẩu')
+        input(type='submit' value='XÁC NHẬN')
+
+    else if site == "newaccount"
+      form(style='margin-top: 50px;' method='post' action="/login")
+        if data != ""
+          label#error() * !{data} *
+
+        input(type='name' name='name' placeholder='Tên' autofocus='')
+        input(type='email' name='email' placeholder='Email')
+        input(type='phone' name='phone' placeholder='Số điện thoại')
+        input(type='submit' value='XÁC NHẬN')
+
+  #labels
+    label#name
+      span PRESS AN MEDIA OFFICE

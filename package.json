@@ -1,0 +1,30 @@
+{
+  "name": "pmoschedule",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www 2> debug.log",
+    "nodemon": "nodemon -L ./bin/www 2> debug.log"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cookie-parser": "~1.4.6",
+    "crypto": "^1.0.1",
+    "csv-parser": "^3.0.0",
+    "debug": "~4.3.4",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "http-errors": "~2.0.0",
+    "mdb-ui-kit": "^6.4.2",
+    "mongoose": "^7.5.3",
+    "morgan": "~1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.5",
+    "pug": "^3.0.2",
+    "redis": "^4.6.10",
+    "response-time": "^2.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

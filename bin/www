@@ -1,0 +1,152 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require("../app");
+var debug = require("debug")("pmo:server");
+var http = require("http");
+var https = require("https");
+const fs = require(`fs`);
+
+const name = "PMO Schedule";
+debug("Booting %o", name);
+/**
+ * Get port from environment and store in Express.
+ * Port HTTP: 80
+ * Port HTTPS: 443
+ */
+var porthttp = normalizePort(process.env.PORTHTTP || "8080");
+var porthttps = normalizePort(process.env.PORTHTTPS || "3000");
+
+app.set("porthttp", porthttp);
+app.set("porthttps", porthttps);
+
+/**
+ * Create HTTP server.
+ */
+var httpserver = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+httpserver.listen(porthttp);
+
+httpserver.on("error", onErrorHttp);
+httpserver.on("listening", onListeningHttp);
+
+/**
+ * Create HTTPs server.
+ */
+try {
+  var options = {
+    key: fs.readFileSync("/app/ssl/private.key"),
+    cert: fs.readFileSync("/app/ssl/certificate.crt"),
+  };
+  var httpsserver = https.createServer(options, app);
+
+  /**
+   * Listen on provided port, on all network interfaces.
+   */
+  httpsserver.listen(porthttps);
+
+  httpsserver.on("error", onErrorHttps);
+  httpsserver.on("listening", onListeningHttps);
+} catch (e) {
+  debug(e);
+}
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onErrorHttp(error) {
+  if (error.syscall !== "listen") {
+    throw error;
+  }
+
+  var bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case "EACCES":
+      console.error(bind + " requires elevated privileges");
+      process.exit(1);
+      break;
+    case "EADDRINUSE":
+      console.error(bind + " is already in use");
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListeningHttp() {
+  var addr = httpserver.address();
+  var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
+
+  debug("HTTP Listening on " + bind);
+}
+
+/**
+ * Event listener for HTTPS server "error" event.
+ */
+
+function onErrorHttps(error) {
+  if (error.syscall !== "listen") {
+    throw error;
+  }
+
+  var bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case "EACCES":
+      console.error(bind + " requires elevated privileges");
+      process.exit(1);
+      break;
+    case "EADDRINUSE":
+      console.error(bind + " is already in use");
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTPS server "listening" event.
+ */
+
+function onListeningHttps() {
+  var addr = httpsserver.address();
+  var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
+
+  debug("HTTPS Listening on " + bind);
+}

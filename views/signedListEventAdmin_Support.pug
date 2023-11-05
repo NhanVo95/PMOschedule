@@ -1,0 +1,206 @@
+extends layout
+
+block stylesheet
+    //- Custom stlylesheet
+    link(rel="stylesheet" href="/css/mdb.min.css")
+    link(rel='stylesheet' href='/stylesheets/signedSchedule.css')
+    link(rel='stylesheet' href='/stylesheets/signedAddEvent.css')
+
+block content
+    // ------------------------------- HEADER OPEN -------------------------
+    #main-header.header(style='cursor: default')
+        a.logo #{title}
+        .header-right
+            a#login.active(href= link + '/account/out') Đăng xuất
+        span.text-holder
+            i.text(style='font-style: normal')
+                | Xin chào, 
+                b(style='font-style: normal') !{name}
+
+    // SECTION The Modal
+    #blockEvents
+    // !SECTION The Modal
+
+    // SECTION The 2nd Modal
+    #blockForm
+    // !SECTION The 2nd Modal
+
+    #mySidenav.sidenav
+        .side-logo-hcmute
+            img(src='/images/logo.png' style='width:90px' alt='HCMUTE Logo')
+        .side-logo-pmo
+            img(src='/images/pmo.png' style='width:90px' alt='PMO Logo')
+        .side-tag
+            p.tag-name DANH MỤC
+        button.button1.button2(onclick="window.location.href='/'") TRANG CHỦ
+        button.button1.button2(onclick="window.location.href='" + link + "?p=schedule'") LỊCH
+        button.button1.button2(onclick="window.location.href='" + link + "?p=addevent'") ĐĂNG KÍ LỊCH
+        button.button1.button3(onclick="window.location.href='" + link + "?p=listevent'") DUYỆT LỊCH
+        button.button1.button2(onclick="window.location.href='" + link + "/account/change'") ĐỔI MẬT KHẨU
+        button.button1.button2(onclick="window.location.href='" + link + "?p=account'") DANH SÁCH TÀI KHOẢN
+
+    #main
+        .dropdown
+            if link == "/support"
+                if status == "photo"
+                    button.dropbtn PHOTO
+                    .dropdown-content
+                        a(href=link + '?p=listevent&n=all') TẤT CẢ
+                        a(href=link + '?p=listevent&n=photo') PHOTO
+                        a(href=link + '?p=listevent&n=video') VIDEO
+                        a(href=link + '?p=listevent&n=livestream') LIVE STREAM
+                        a(href=link + '?p=listevent&n=deny') HỦY DUYỆT
+                else if status == "video"
+                    button.dropbtn VIDEO
+                    .dropdown-content
+                        a(href=link + '?p=listevent&n=all') TẤT CẢ
+                        a(href=link + '?p=listevent&n=photo') PHOTO
+                        a(href=link + '?p=listevent&n=video') VIDEO
+                        a(href=link + '?p=listevent&n=livestream') LIVE STREAM
+                        a(href=link + '?p=listevent&n=deny') HỦY DUYỆT
+                else if status == "livestream"
+                    button.dropbtn LIVE STREAM
+                    .dropdown-content
+                        a(href=link + '?p=listevent&n=all') TẤT CẢ
+                        a(href=link + '?p=listevent&n=photo') PHOTO
+                        a(href=link + '?p=listevent&n=video') VIDEO
+                        a(href=link + '?p=listevent&n=livestream') LIVE STREAM
+                        a(href=link + '?p=listevent&n=deny') HỦY DUYỆT
+                else if status == "deny"
+                    button.dropbtn HỦY DUYỆT
+                    .dropdown-content
+                        a(href=link + '?p=listevent&n=all') TẤT CẢ
+                        a(href=link + '?p=listevent&n=photo') PHOTO
+                        a(href=link + '?p=listevent&n=video') VIDEO
+                        a(href=link + '?p=listevent&n=livestream') LIVE STREAM
+                        a(href=link + '?p=listevent&n=deny') HỦY DUYỆT
+                else
+                    button.dropbtn TẤT CẢ
+                    .dropdown-content
+                        a(href=link + '?p=listevent&n=all') TẤT CẢ
+                        a(href=link + '?p=listevent&n=photo') PHOTO
+                        a(href=link + '?p=listevent&n=video') VIDEO
+                        a(href=link + '?p=listevent&n=livestream') LIVE STREAM
+                        a(href=link + '?p=listevent&n=deny') HỦY DUYỆT
+            else
+                if status == "waiting"
+                    button.dropbtn CHỜ DUYỆT
+                    .dropdown-content
+                        a(href=link + '?p=listevent&n=all') TẤT CẢ
+                        a(href=link + '?p=listevent&n=waiting') CHỜ DUYỆT
+                        a(href=link + '?p=listevent&n=approved') ĐÃ DUYỆT
+                        a(href=link + '?p=listevent&n=deny') HỦY DUYỆT
+                else if status == "approved"
+                    button.dropbtn ĐÃ DUYỆT
+                    .dropdown-content
+                        a(href=link + '?p=listevent&n=all') TẤT CẢ
+                        a(href=link + '?p=listevent&n=waiting') CHỜ DUYỆT
+                        a(href=link + '?p=listevent&n=approved') ĐÃ DUYỆT
+                        a(href=link + '?p=listevent&n=deny') HỦY DUYỆT
+                else if status == "deny"
+                    button.dropbtn HỦY DUYỆT
+                    .dropdown-content
+                        a(href=link + '?p=listevent&n=all') TẤT CẢ
+                        a(href=link + '?p=listevent&n=waiting') CHỜ DUYỆT
+                        a(href=link + '?p=listevent&n=approved') ĐÃ DUYỆT
+                        a(href=link + '?p=listevent&n=deny') HỦY DUYỆT
+                else
+                    button.dropbtn TẤT CẢ
+                    .dropdown-content
+                        a(href=link + '?p=listevent&n=all') TẤT CẢ
+                        a(href=link + '?p=listevent&n=waiting') CHỜ DUYỆT
+                        a(href=link + '?p=listevent&n=approved') ĐÃ DUYỆT
+                        a(href=link + '?p=listevent&n=deny') HỦY DUYỆT
+        table#customers
+            tr
+                th(style='width: 5em; text-align: center') Tên chương trình
+                th(style='width: 5em; text-align: center') Mục hỗ trợ
+                th(style='width: 5em; text-align: center') Người mượn
+                th(style='width: 5em; text-align: center') Thời gian bắt đầu
+                th(style='width: 5em; text-align: center') Thời gian kết thúc
+                th(style='width: 5em; text-align: center') Nơi tổ chức
+                th(style='width: 2em; text-align: center') PDF
+                th(style='width: 5em; text-align: center') Trạng thái duyệt
+                th(style='width: 4em; text-align: center') Thay đổi
+
+
+    // Optional JavaScript for bootstrap
+    // jQuery first, then Popper.js, then Bootstrap JS
+    //- script(src='/jquery/js/jquery-3.6.0.js')
+    //- script(src='https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous')
+    //- script(src='/bootstrap/js/bootstrap.min.js')
+
+    script(src='/javascripts/scriptAdmin.js')
+    //- script(src='/javascripts/scriptSupport.js')
+    script(type="text/javascript" src="/js/mdb.min.js")
+
+    script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous')
+    script(src='https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous')
+    script(src='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous')
+
+    script. 
+        var eventsData = !{JSON.stringify(events)};
+        var status = !{JSON.stringify(status)};
+        var link = !{JSON.stringify(link)}
+
+        showListEvent_support(eventsData)
+        showBlockEvent(eventsData)
+        showBlockReply_support(eventsData)
+        /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
+
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+        var open = false;
+        var current = 0;
+        var first = false;
+        var again = false;
+
+        // NOTE - When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target.id.slice(0, 3) == "pmo") {
+                var element = document.getElementById(event.target.id);
+            element.style.display = "none";
+            }
+        };
+
+        // NOTE - When the user clicks the button, open the modal
+        function toggle(id) {
+            var element = document.getElementById("pmo" + id);
+            element.style.display = "block";
+        };
+
+        function toggleReply(id, support) {
+            var element = document.getElementById("pmoReply" + support + id);
+            element.style.display = "block";
+        };
+
+        const element = document.getElementById("main");
+        var nodes1 = element.getElementsByClassName("day");
+        var nodes2 = element.getElementsByClassName("date");
+
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "245px";
+            document.getElementById("main-header").style.marginLeft = "260px";
+            // document.getElementsByClassName("date")[].style.="0.5em"
+            // document.getElementsByClassName("date")[].style.="0.5em"
+            for (let i = 0; i < nodes2.length; i++) {
+                nodes2[i].style.paddingBottom = "110%";
+            }
+        }
+
+        openNav();
+
+        //- function closeNav() {
+        //-   document.getElementById("mySidenav").style.width = "0";
+        //-   document.getElementById("main").style.marginLeft = "0";
+        //-   document.getElementById("main-header").style.marginLeft = "0";
+        //-   for (let i = 0; i < nodes.length; i++) {
+        //-     nodes[i].style.maxHeight = "3.5em";
+        //-   }
+        //- }

@@ -1,0 +1,166 @@
+extends layout
+
+block stylesheet
+  //- Custom stlylesheet
+  link(rel="stylesheet" href="/css/mdb.min.css")
+  link(type='text/css' rel='stylesheet' href='/jquery/css/jquery.datetimepicker.css')
+  link(type='text/css' rel='stylesheet' href='/css/signedAddEvent.css')
+
+block content
+  // ------------------------------- HEADER OPEN -------------------------
+  #main-header.header(style='cursor: default')
+    a.logo #{title}
+    .header-right
+      a#login.active(href= '/login/out?redirect=' + link) Đăng xuất
+    span.text-holder
+      i.text(style='font-style: normal')
+        | Xin chào, 
+        b(style='font-style: normal') !{name}
+
+  #mySidenav.sidenav
+    .side-logo-hcmute
+      img(src='/images/logo.png' style='width:90px' alt='HCMUTE Logo')
+    .side-logo-pmo
+      img(src='/images/pmo.png' style='width:90px' alt='PMO Logo')
+    .side-tag
+      p.tag-name DANH MỤC
+
+    button.button1.button2(onclick="window.location.href='/'") TRANG CHỦ
+    button.button1.button2(onclick="window.location.href='" + link + "?p=schedule'") LỊCH
+    button.button1.button3(onclick="window.location.href='" + link + "?p=addevent'") ĐĂNG KÍ LỊCH
+    button.button1.button2(onclick="window.location.href='" + link + "?p=listevent'") LỊCH ĐÃ ĐĂNG KÝ
+    button.button1.button2(onclick="window.location.href='/login/change?redirect="+ link +"'") ĐỔI MẬT KHẨU
+
+  #main
+    .booking-form
+      .booking-header
+        p &Dstrok;&Abreve;NG K&Iacute;
+      form(action=link method='post' enctype="multipart/form-data")
+
+        .form-group.mb-4
+          label(for='name') Tên chương trình
+          input#name.form-control(type='text' required name='name')
+
+        .form-group.mb-4
+          label(for='startTime') Thời gian chương trình bắt đầu
+          input#startTime.form-control(type="text" required readonly name='startTime')
+
+        .form-group.mb-4
+          label(for='endTime') Thời gian chương trình kết thúc
+          input#endTime.form-control(type="text" required readonly name='endTime')
+
+        .form-group.mb-4
+          label(for='place') Địa điểm tổ chức chương trình 
+          select#place.form-control(name='place' onchange="showTextInput()")
+            option(value='default' selected='selected' disabled) Lựa chọn địa điểm tổ chức chương trình
+            option(value='grandhall') Hội trường lớn
+            option(value='ph1') Phòng họp 1
+            option(value='ph2') Phòng họp 2
+            option(value='ph2') Phòng họp 3
+            option(value='other') Khác
+
+        .form-group.mb-4
+          label(for='placeOther') Địa điểm khác tổ chức chương trình
+          input#placeOhter.form-control(type="text" name='placeOhter' placeholder="Chọn địa điểm tổ chức chương trình trước" disabled)
+
+        .form-group.mb-4
+          label(for='reason') Lý do mượn
+          input#reason.form-control(type="text" name='reason')
+
+        .form-group.mb-4
+          label(for='responsible') Đại diện ban tổ chức chương trình
+          input#responsible.form-control(type="text" name='responsible')
+
+        .form-group.mb-4
+          label(for='phone') Số điện thoại đại diện ban tổ chức chương trình
+          input#phone.form-control(type="text" name='phone')
+
+        .form-check.form-switch.mb-4
+          input#photo.form-check-input(type='checkbox' name='photo' value='true')
+          label.form-check-label(for='photo') Chụp ảnh tư liệu
+
+        .form-check.form-switch.mb-4
+          input#video.form-check-input(type='checkbox' name='video' value='true')
+          label.form-check-label(for='video') Quay tư liệu
+
+        .form-check.form-switch.mb-4
+          input#livestream.form-check-input(type='checkbox' name='livestream' value='true')
+          label.form-check-label(for='livestream') Livestream
+
+        .mb-4
+          label.form-label(for='FileKH') Kế hoạch chương trình
+          input#FileKH.form-control(type="file" name='FileKH' required)
+
+        // Submit button
+        button.btn.btn-primary.btn-block.mb-4(type='submit') Đăng ký
+
+  // Optional JavaScript for bootstrap
+  // jQuery first, then Popper.js, then Bootstrap JS
+  //- script(src='/jquery/js/jquery-3.6.0.js')
+  //- script(src='https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous')
+  //- script(src='/bootstrap/js/bootstrap.min.js')
+
+  script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous')
+  script(src='https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous')
+  script(src='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous')
+
+  script(type="text/javascript" src="/js/mdb.min.js")
+  script(type="text/javascript" src='jquery/js/jquery.js')
+  script(type="text/javascript" src="jquery/js/jquery.datetimepicker.full.js")
+  script.
+    $("#startTime").datetimepicker({
+      format:'d/m/Y H:i',
+      formatTime:'H:i',
+      formatDate:'d/m/Y',
+      step: 30,
+      defaultTime: "08:00"
+    });
+    $("#endTime").datetimepicker({
+      format:'d/m/Y H:i',
+      formatTime:'H:i',
+      formatDate:'d/m/Y',
+      step: 30,
+      defaultTime: "08:00"
+    });
+
+
+    /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
+
+    const element = document.getElementById("main");
+    var nodes1 = element.getElementsByClassName("day");
+    var nodes2 = element.getElementsByClassName("date");
+
+    function openNav() {
+      document.getElementById("mySidenav").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "245px";
+      document.getElementById("main-header").style.marginLeft = "260px";
+      // document.getElementsByClassName("date")[].style.="0.5em"
+      // document.getElementsByClassName("date")[].style.="0.5em"
+      for (let i = 0; i < nodes2.length; i++) {
+        nodes2[i].style.paddingBottom = "110%";
+      }
+    }
+
+    openNav();
+
+    function showTextInput() {
+      selectCheck = document.getElementById('place').value;
+      textInput = document.getElementById('placeOhter');
+
+      if (selectCheck == "other") {
+        textInput.removeAttribute('disabled');
+        textInput.setAttribute('placeholder', 'Nhập địa điểm tổ chức chương trình');
+      } else {
+        textInput.setAttribute('disabled', '');
+        textInput.setAttribute('placeholder', 'Chọn địa điểm tổ chức chương trình trước');
+      }
+    }
+
+    //- function closeNav() {
+    //-   document.getElementById("mySidenav").style.width = "0";
+    //-   document.getElementById("main").style.marginLeft = "0";
+    //-   document.getElementById("main-header").style.marginLeft = "0";
+    //-   for (let i = 0; i < nodes.length; i++) {
+    //-     nodes[i].style.maxHeight = "3.5em";
+    //-   }
+    //- }

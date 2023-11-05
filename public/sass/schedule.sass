@@ -1,0 +1,526 @@
+*
+  font-family: "Roboto"
+  list-style-type: none !important
+
+\:root
+  --blue1:#3e4095
+  --white:#ffffff
+  --red:#bf525f
+  --red1:#9f446c
+  --orange:#feab63
+  --black:#3d3d3d
+
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700")
+
+html
+  -webkit-box-sizing: border-box
+  -moz-box-sizing: border-box
+  box-sizing: border-box
+
+*
+  -webkit-box-sizing: inherit
+  -moz-box-sizing: inherit
+  box-sizing: inherit
+  padding: 0
+  margin: 0
+
+  &:before, &:after
+    -webkit-box-sizing: inherit
+    -moz-box-sizing: inherit
+    box-sizing: inherit
+    padding: 0
+    margin: 0
+
+body
+  font-family: "Montserrat", sans-serif
+  line-height: 1.5
+  letter-spacing: 1px
+
+.header
+  overflow: hidden
+  background-color: #ffffff
+  padding: 20px 10px
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+  transition: margin-left 0.5s
+
+  a
+    color: black
+    text-align: center
+    padding: 8px 28px 8px 28px
+    text-decoration: none
+    font-size: 18px
+    line-height: 25px
+
+    &.logo
+      font-size: 27px
+      font-weight: bold
+
+    &:hover
+      color: black
+      cursor: default
+
+/* Style the header links
+
+/* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger
+
+/* Change the background color on mouse-over
+
+#login:hover
+  background-color: #1f1f1f
+  cursor: pointer
+
+/* Style the active/current link
+
+.header a.active
+  background-color: var(--black)
+  color: white
+
+/* Float the link section to the right
+
+.header-right
+  float: right
+
+/* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other
+@media screen and (max-width: 500px)
+  .header a
+    float: none
+    display: block
+    text-align: left
+
+  .header-right
+    float: none
+
+/* -----------------------------------------------SIDE NAV-----------------------------------------------------------
+
+.sidenav
+  height: 100%
+  width: 0
+  position: fixed
+  z-index: 1
+  top: 0
+  left: 0
+  background-color: #ffffff
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+  overflow-x: hidden
+  transition: 0.5s
+  padding-top: 20px
+
+  .closebtn
+    position: absolute
+    top: 0
+    right: 25px
+    font-size: 36px
+    margin-left: 50px
+
+/* .sidenav a {
+ *  padding: 8px 8px 8px 32px;
+ *  text-decoration: none;
+ *  font-size: 25px;
+ *  color: #818181;
+ *  background-color:#00c800;
+ *  display: block;
+ *  transition: 0.3s;
+ *}
+ *
+ *.sidenav a:hover {
+ *  color: #f1f1f1;
+ *}
+
+#main
+  transition: margin-left 0.5s
+  padding: 16px
+
+.side-sub
+  margin-bottom: 3px
+
+.side-tag
+  margin-bottom: 1.5em
+
+.side-item
+  margin-left: 20px
+  margin-bottom: 7px
+  color: white
+  padding: 3px 100px 3px 30px
+  font-size: 15px
+
+.side-sub span :hover
+  background-color: rgb(3, 3, 69)
+  padding: 3px 55px 3px 55px
+  margin-left: -55px
+  cursor: pointer
+
+.side-item span
+  display: inline-block
+  color: white
+
+.sidenav .tag-name
+  color: white
+  text-align: center
+  font-size: 21px
+  padding: 10px 0 10px 0
+  background-color: var(--blue1)
+
+.side-logo-hcmute-not
+  position: fixed
+  bottom: 10%
+  left: 20px
+  display: inline-block
+
+.side-logo-pmo-not
+  position: fixed
+  bottom: 10%
+  left: 135px
+  display: inline-block
+
+.side-logo img
+  display: block
+  margin-left: auto
+  margin-right: auto
+  width: 50%
+
+@media screen and (max-height: 450px)
+  .sidenav
+    padding-top: 15px
+
+    a
+      font-size: 18px
+
+/* -----------------------------------------------SIDE NAV-----------------------------------------------------------
+
+ul
+  list-style-type: none !important
+
+body
+  font-family: Verdana, sans-serif
+
+/* Month header
+
+.month
+  padding: 10px 25px
+  width: 100%
+  background: var(--blue1)
+  text-align: center
+
+  ul
+    margin: 0
+    padding: 0
+
+    li
+      color: white
+      font-size: 20px
+      text-transform: uppercase
+      letter-spacing: 3px
+
+  .prev
+    float: left
+    padding-top: 10px
+
+/* Month list
+
+/* Previous button inside month header
+
+.weekend
+  color: var(--red) !important
+
+/* Next button
+
+.month .next
+  float: right
+  padding-top: 10px
+
+.timetable
+  font-size: 100%
+  margin: 0.5em
+  border-collapse: collapse
+  border-spacing: 0
+  width: 100%
+  height: 100%
+  min-width: 800px
+
+  &:before, &:after
+    box-sizing: border-box
+
+@media (max-width: 800px)
+  table .time
+    display: none
+
+summary
+  padding-bottom: 0.25em
+  font-size: 1.5em
+  font-weight: 100
+  text-align: right
+
+.timetable
+  tr
+    position: relative
+
+  th
+    text-align: center !important
+    color: var(--black) !important
+    font-weight: normal
+    font-size: 1.2em
+    font-weight: bolder
+
+  td
+    width: 14.28571429%
+    overflow: hidden
+
+.date
+  text-align: right
+  display: block
+  height: 0
+  font-size: 1em
+  padding: 0.1em
+  padding-bottom: 86%
+  position: relative
+  border-bottom: 1px solid #dedbdb
+  margin-left: 0.25em
+  margin-right: 0.25em
+  font-weight: bolder
+
+tr:first-child:not(.current-week) .date
+  border-top: 1px solid #dedbdb
+
+.date
+  ul, li
+    margin: 0
+    padding: 0
+    list-style: none
+    color: white
+
+  ul
+    text-align: left
+    font-size: 0.9em
+    width: 100%
+    overflow: hidden
+    position: absolute
+    font-weight: normal
+
+  li
+    color: white
+    width: 100%
+    max-height: 3.5em
+    overflow: hidden
+
+    /* white-space: nowrap;
+    text-overflow: ellipsis
+    position: relative
+    background: var(--red)
+    margin-bottom: 3px
+
+  .old
+    background: #3837375e
+
+  .photo
+    background: #ff00005e
+
+  .video
+    background: #001aff5e
+
+  .livestream
+    background: #02ff065e
+
+  li:before
+    /* content: "\2022";
+    color: inherit
+    display: inline-block
+    padding-right: 0.25em
+
+.time
+  font-size: 0.9em
+  color: white
+
+  /* text-align: right;
+  /* float: right;
+  display: contents
+
+.event
+  font-size: 0.9em
+  color: white
+  overflow: hidden
+
+.reminder
+  max-height: 5.5em !important
+
+.memo
+  color: white
+  font-size: smaller
+  cursor: pointer
+
+.person
+  color: white
+  font-size: 0.9em
+
+.previous-week .date
+  border: none
+
+.current-week
+  border-top: 4px solid #fed6d7
+
+.current-day
+  background: #3749b85e
+  border-top: 4px solid #0f249a
+
+  .date
+    font-weight: bold
+    color: #11094d
+
+.none-day
+  background: #e6e5e5
+  color: rgba(93, 94, 124, 0.518)
+
+.weekend
+  background-clip: padding-box
+
+  /* background: #f5f5f5;
+  /* background: #fed6d7;
+
+.special-day
+  color: var(--red)
+  text-align: right
+  display: block
+  font-size: 0.8em
+
+.date .different-calendar
+  color: #00c800
+
+.note
+  display: inline-block
+
+  p
+    font-size: 0.2em
+
+.day
+  color: var(--black)
+  background: white
+  border-bottom: 1px solid #dedbdb
+
+#dont
+  list-style: none
+  list-style-type: none
+  margin: 0
+  padding: 0
+
+.modal
+  display: none
+
+  /* Hidden by default
+  position: fixed
+
+  /* Stay in place
+  z-index: 1
+
+  /* Sit on top
+  padding-top: 100px
+
+  /* Location of the box
+  left: 10em
+  top: -2em
+  width: 100%
+
+  /* Full width
+  height: 100%
+
+  /* Full height
+  overflow: auto
+
+  /* Enable scroll if needed
+  background-color: rgb(0, 0, 0)
+
+  /* Fallback color
+  background-color: rgba(0, 0, 0, 0.4)
+
+  /* Black w/ opacity
+
+/* Modal Content
+
+.modal-content
+  position: relative
+  background-color: #fefefe
+  margin: auto
+  padding: 0
+  border: 1px solid #888
+  width: 35%
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+  -webkit-animation-name: animatetop
+  -webkit-animation-duration: 0.4s
+  animation-name: animatetop
+  animation-duration: 0.4s
+
+/* Add Animation
+@-webkit-keyframes animatetop
+  from
+    top: -300px
+    opacity: 0
+
+  to
+    top: 0
+    opacity: 1
+
+@keyframes animatetop
+  from
+    top: -300px
+    opacity: 0
+
+  to
+    top: 0
+    opacity: 1
+
+/* The Close Button
+
+.close
+  color: white
+  float: right
+  font-size: 28px
+  font-weight: bold
+
+  &:hover, &:focus
+    color: #000
+    text-decoration: none
+    cursor: pointer
+
+.modal-header
+  padding: 2px 16px
+  background-color: var(--blue1)
+  color: white
+  text-align: center
+
+.modal-body
+  padding: 2px
+
+#customers
+  border-collapse: collapse
+  width: 100%
+
+  td
+    width: 30px !important
+    border: 1px solid #ddd
+    padding: 8px 0px 8px 8px
+    width: 54px
+
+  th
+    border: 1px solid #ddd
+    padding: 8px 0px 8px 8px
+    width: 54px
+
+  tr
+    &:nth-child(even)
+      background-color: #f2f2f2
+
+    &:hover
+      background-color: #ddd
+
+  th
+    padding-top: 12px
+    padding-bottom: 12px
+    text-align: center
+    background-color: #04aa6d
+    color: white
+
+/* Mobile
+@media only screen and (max-width: 46.1875em)
+
+/* Table
+@media only screen and (min-width: 46.25em) and (max-width: 63.9375em)
+  #main-header
+    width: 93%

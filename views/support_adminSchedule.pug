@@ -1,0 +1,191 @@
+extends layout
+
+block stylesheet
+  //- Custom stlylesheet
+  link(rel='stylesheet' href='/css/signedSchedule.css')
+  link(rel='stylesheet' href='/css/schedule.css')
+
+block content
+  // ------------------------------- HEADER OPEN -------------------------
+  #main-header.header(style='cursor: default')
+    a.logo #{title}
+    .header-right
+      a#login.active(href= '/login/out?redirect=' + link) Đăng xuất
+    span.text-holder
+      i.text(style='font-style: normal')
+        | Xin chào, 
+        b(style='font-style: normal') !{name}
+
+  // SECTION The Modal
+  #blockEvents
+  // !SECTION The Modal
+
+  #mySidenav.sidenav
+    .side-logo-hcmute
+      img(src='/images/logo.png' style='width:90px' alt='HCMUTE Logo')
+    .side-logo-pmo
+      img(src='/images/pmo.png' style='width:90px' alt='PMO Logo')
+    .side-tag
+      p.tag-name DANH MỤC
+
+    button.button1.button2(onclick="window.location.href='/'") TRANG CHỦ
+    button.button1.button3(onclick="window.location.href='" + link + "?p=schedule'") LỊCH
+    button.button1.button2(onclick="window.location.href='" + link + "?p=addevent'") ĐĂNG KÍ LỊCH
+    button.button1.button2(onclick="window.location.href='" + link + "?p=listevent'") DUYỆT LỊCH
+    button.button1.button2(onclick="window.location.href='/login/change?redirect="+ link +"'") ĐỔI MẬT KHẨU
+    button.button1.button2(onclick="window.location.href='" + link + "?p=account'") DANH SÁCH TÀI KHOẢN
+
+  #main
+    #reminder.month
+      ul
+        li.prev(style='cursor:pointer;' onclick='btprevious()') &#x276E;
+        li.next(style='cursor:pointer;' onclick='btnext()') &#x276F;
+        li#monthAndYear(style='font-size: 20px')
+
+    table#calendar.timetable(style='margin: auto')
+      thead
+        tr
+          th Sunday
+          th Monday
+          th Tuesday
+          th Wednesday
+          th Thursday
+          th Friday
+          th Saturday
+      tbody#calendar-body
+
+    form.form-inline
+      label.lead.mr-2.ml-2(for='month') Jump To: 
+      select#month.form-control.col-sm-4(name='month' onchange='btjump()')
+        option(value='0') Jan
+        option(value='1') Feb
+        option(value='2') Mar
+        option(value='3') Apr
+        option(value='4') May
+        option(value='5') Jun
+        option(value='6') Jul
+        option(value='7') Aug
+        option(value='8') Sep
+        option(value='9') Oct
+        option(value='10') Nov
+        option(value='11') Dec
+      label(for='year')
+      select#year.form-control.col-sm-4(name='year' onchange='btjump()')
+        option(value='2010') 2010
+        option(value='2011') 2011
+        option(value='2012') 2012
+        option(value='2013') 2013
+        option(value='2014') 2014
+        option(value='2015') 2015
+        option(value='2016') 2016
+        option(value='2017') 2017
+        option(value='2018') 2018
+        option(value='2019') 2019
+        option(value='2020') 2020
+        option(value='2021') 2021
+        option(value='2022') 2022
+        option(value='2023') 2023
+        option(value='2024') 2024
+        option(value='2025') 2025
+        option(value='2026') 2026
+        option(value='2027') 2027
+        option(value='2028') 2028
+        option(value='2029') 2029
+        option(value='2030') 2030
+  // <button name="jump" onclick="btjump()">Go</button>
+
+  // Optional JavaScript for bootstrap
+  // jQuery first, then Popper.js, then Bootstrap JS
+  script(src='/js/calendar.js')
+  script(src='/js/fetch.js')
+  //- script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous')
+  //- script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js' integrity='sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ' crossorigin='anonymous')
+  //- script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js' integrity='sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm' crossorigin='anonymous')
+  script.
+    var link = !{JSON.stringify(link)};
+    var eventData = fetchAPI("/api/" + link + "?month=" + (currentMonth + 1).toString()+"&approved=true");
+
+    showCalendar(currentMonth, currentYear);
+
+    eventData.then((data) => {
+      showBlockEvent(data);
+      showEventInCalendarSupport(data, currentMonth, currentYear);
+    });
+
+    function btnext() {
+      next()
+    }
+    function btprevious() {
+      previous()
+    }
+    function btjump() {
+      jump()
+    }
+
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+    var open = false;
+    var current = 0;
+    var first = false;
+    var again = false;
+
+    // NOTE - When the user clicks the button, open the modal
+    //- btn.onclick = function () {
+    //-   modal.style.display = "block";
+    //- };
+
+    // NOTE - When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+      if (event.target.id.slice(0, 3) == "pmo") {
+        var element = document.getElementById(event.target.id);
+      element.style.display = "none";
+      }
+    };
+
+    // NOTE - When the user clicks the button, open the modal
+    function toggle(id) {
+      var element = document.getElementById("pmo" + id);
+      element.style.display = "block";
+    };
+
+    //- window.onload = function () {
+    //-   const elements = document.getElementsByClassName("reminder");
+
+    //-   for (const element of elements) {
+    //-     element.addEventListener("click", (e) => {
+    //-       modal.style.display = "block";
+    //-     });
+    //-   }
+    //- };
+    /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
+
+    const element = document.getElementById("main");
+    var nodes1 = element.getElementsByClassName("day");
+    var nodes2 = element.getElementsByClassName("date");
+
+    function openNav() {
+      document.getElementById("mySidenav").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "245px";
+      document.getElementById("main-header").style.marginLeft = "260px";
+      // document.getElementsByClassName("date")[].style.="0.5em"
+      // document.getElementsByClassName("date")[].style.="0.5em"
+      for (let i = 0; i < nodes2.length; i++) {
+        nodes2[i].style.paddingBottom = "110%";
+      }
+    }
+
+    openNav();
+
+    //- function closeNav() {
+    //-   document.getElementById("mySidenav").style.width = "0";
+    //-   document.getElementById("main").style.marginLeft = "0";
+    //-   document.getElementById("main-header").style.marginLeft = "0";
+    //-   for (let i = 0; i < nodes.length; i++) {
+    //-     nodes[i].style.maxHeight = "3.5em";
+    //-   }
+    //- }
