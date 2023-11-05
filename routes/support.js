@@ -12,12 +12,12 @@ const multer = require("multer");
 // const upload = multer({ dest: "public/files" });
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "public/pdf");
+    cb(null, "public/KeHoach/pdf");
   },
 
   filename: (req, file, cb) => {
     const ext = file.mimetype.split("/")[1];
-    cb(null, `KH-studio-${Date.now().toLocaleString("vi-VN")}.${ext}`);
+    cb(null, `KH-support-${Date.now().toLocaleString("vi-VN")}.${ext}`);
     // cb(null, `KH-${file.fieldname}-${Date.now()}.${ext}`);
   },
 });

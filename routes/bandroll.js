@@ -10,9 +10,23 @@ const multer = require("multer");
 
 // NOTE - Configuration for Multer
 // const upload = multer({ dest: "public/files" });
+// const multerStorage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "public/pdf");
+//   },
+//   filename: (req, file, cb) => {
+//     const ext = file.mimetype.split("/")[1];
+//     cb(null, `KH-bandroll-${Date.now().toLocaleString("vi-VN")}.${ext}`);
+//     // cb(null, `KH-${file.fieldname}-${Date.now()}.${ext}`);
+//   },
+// });
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "public/pdf");
+    if (file.fieldname === "FileKH") {
+      cb(null, "public/KeHoach/pdf");
+    } else {
+      cb(null, "public/KeHoach/img");
+    }
   },
   filename: (req, file, cb) => {
     const ext = file.mimetype.split("/")[1];
@@ -23,18 +37,43 @@ const multerStorage = multer.diskStorage({
 
 // Multer Filter
 const multerFilter = (req, file, cb) => {
-  if (file.mimetype.split("/")[1] === "pdf") {
-    cb(null, true);
+  if (file.fieldname === "FileKH") {
+    if (file.mimetype.split("/")[1] === "pdf") {
+      cb(null, true);
+    } else {
+      cb(new Error("Not a PDF File!!"), false);
+    }
   } else {
-    cb(new Error("Not a PDF File!!"), false);
+    if (
+      file.mimetype.split("/")[1] === "jpg" ||
+      file.mimetype.split("/")[1] === "jpeg" ||
+      file.mimetype.split("/")[1] === "png" ||
+      file.mimetype.split("/")[1] === "pdf"
+    ) {
+      cb(null, true);
+    } else {
+      cb(new Error("Not a Image File!!"), false);
+    }
   }
 };
 
 //Calling the "multer" Function
 const upload = multer({
   storage: multerStorage,
+  limits: {
+    fileSize: 1024 * 10,
+  },
   fileFilter: multerFilter,
-});
+}).fields([
+  {
+    name: "FileKH",
+    maxCount: 2,
+  },
+  {
+    name: "Fileimg",
+    maxCount: 5,
+  },
+]);
 
 var db = require("../controllers/database");
 
@@ -254,87 +293,89 @@ router
       }
     }
   })
-  .post(upload.single("FileKH"), async function (req, res, next) {
+  .post(upload, async function (req, res, next) {
     const sess = req.session;
+
+    console.log(req.file);
 
     const user = await redis.retrieveRedis(sess.userid);
 
-    if (!sess.userid || !(user.length != 2)) {
-      res.redirect(link);
-    } else {
-      const {
-        name,
-        startTime,
-        endTime,
-        reason,
-        responsible,
-        phone,
-        photo,
-        video,
-        livestream,
-      } = req.body;
+    // if (!sess.userid || !(user.length != 2)) {
+    //   res.redirect(link);
+    // } else {
+    //   const {
+    //     name,
+    //     startTime,
+    //     endTime,
+    //     reason,
+    //     responsible,
+    //     phone,
+    //     photo,
+    //     video,
+    //     livestream,
+    //   } = req.body;
 
-      var data = {
-        approved: "waiting",
-        photo: "",
-        video: "",
-        livestream: "",
-        name: name,
-        place: "studio",
-        reason: reason,
-        responsible: responsible,
-        phone: phone,
-        createdBy: user.id,
-        file: req.file.filename,
-        startTime: new Date(
-          startTime.slice(6, 11),
-          startTime.slice(3, 5) - 1,
-          startTime.slice(0, 2),
-          startTime.slice(11, 13),
-          startTime.slice(14, 16)
-        ),
-        endTime: new Date(
-          endTime.slice(6, 11),
-          endTime.slice(3, 5) - 1,
-          endTime.slice(0, 2),
-          endTime.slice(11, 13),
-          endTime.slice(14, 16)
-        ),
-      };
+    //   var data = {
+    //     approved: "waiting",
+    //     photo: "",
+    //     video: "",
+    //     livestream: "",
+    //     name: name,
+    //     place: "studio",
+    //     reason: reason,
+    //     responsible: responsible,
+    //     phone: phone,
+    //     createdBy: user.id,
+    //     file: req.file.filename,
+    //     startTime: new Date(
+    //       startTime.slice(6, 11),
+    //       startTime.slice(3, 5) - 1,
+    //       startTime.slice(0, 2),
+    //       startTime.slice(11, 13),
+    //       startTime.slice(14, 16)
+    //     ),
+    //     endTime: new Date(
+    //       endTime.slice(6, 11),
+    //       endTime.slice(3, 5) - 1,
+    //       endTime.slice(0, 2),
+    //       endTime.slice(11, 13),
+    //       endTime.slice(14, 16)
+    //     ),
+    //   };
 
-      if (user.permission == "admin") {
-        data.approved = "true";
-        data.approvedBy = user.id;
+    //   if (user.permission == "admin") {
+    //     data.approved = "true";
+    //     data.approvedBy = user.id;
 
-        if (photo == "true") {
-          data.photo = "true";
-        }
-        if (video == "true") {
-          data.video = "true";
-        }
-        if (livestream == "true") {
-          data.livestream = "true";
-        }
-      } else {
-        db.getIDadmin("pmo@hcmute.edu.vn").then((result) => {
-          data.approvedBy = result;
-        });
+    //     if (photo == "true") {
+    //       data.photo = "true";
+    //     }
+    //     if (video == "true") {
+    //       data.video = "true";
+    //     }
+    //     if (livestream == "true") {
+    //       data.livestream = "true";
+    //     }
+    //   } else {
+    //     db.getIDadmin("pmo@hcmute.edu.vn").then((result) => {
+    //       data.approvedBy = result;
+    //     });
 
-        if (photo == "true") {
-          data.photo = "waiting";
-        }
-        if (video == "true") {
-          data.video = "waiting";
-        }
-        if (livestream == "true") {
-          data.livestream = "waiting";
-        }
-      }
+    //     if (photo == "true") {
+    //       data.photo = "waiting";
+    //     }
+    //     if (video == "true") {
+    //       data.video = "waiting";
+    //     }
+    //     if (livestream == "true") {
+    //       data.livestream = "waiting";
+    //     }
+    //   }
 
-      db.addEvent(data);
+    //   db.addEvent(data);
 
-      res.redirect(link);
-    }
+    //   res.redirect(link);
+    // }
   });
 
 router.route("/approved").get(async function (req, res, next) {
