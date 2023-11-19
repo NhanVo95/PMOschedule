@@ -442,17 +442,20 @@ module.exports.getEvent = async function (place, month, approved) {
   }
 
   var eventData = {};
+
   if (place == "studio") {
     if (approved != "all") {
       filter.approved = approved;
     }
 
+    //criteria for sort can be asc, desc, ascending, descending, 1, or -1
     try {
       eventData = await studioModel
-        .find(filter)
+        .find({})
         .populate({
           path: "eventID",
-          // match: filter,
+          match: filter,
+          options: { sort: [["startTime", "desc"]] },
         })
         .populate({
           path: "createdBy",
@@ -462,8 +465,8 @@ module.exports.getEvent = async function (place, month, approved) {
           path: "approvedBy",
           select: "name email",
           populate: { path: "userID", select: "phone" },
-        })
-        .sort({ startTime: 1 });
+        });
+      // .sort({ startTime: 1 });
     } catch (error) {
       debugDatabase(error);
     }

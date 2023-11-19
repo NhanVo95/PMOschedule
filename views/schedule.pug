@@ -102,8 +102,12 @@ block content
 
     eventData.then((data) => {
       showBlockEvent(data);
-      if (link == "support") {}else
-      {showEventInCalendarSupport(data, currentMonth, currentYear);}
+
+      if (link == "support") {
+        showEventInCalendarSupport(data, currentMonth, currentYear);
+      } else {
+        showEventInCalendar(data, currentMonth, currentYear);
+      }
     });
 
     function btnext() {

@@ -1,4 +1,6 @@
-FROM node:20.4
+FROM node:20.9
+
+ARG VERSION=1.0.0
 
 WORKDIR /app
 
@@ -7,6 +9,9 @@ WORKDIR /app
 # where available (npm@5+)
 COPY package*.json ./
 COPY nodemon.json ./
+
+LABEL license=MIT \
+  version=$VERSION
 
 # If building code for production
 # RUN npm ci --only=production

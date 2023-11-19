@@ -88,7 +88,7 @@ const loginRouter = require("./routes/login");
 const studioRouter = require("./routes/studio");
 const supportRouter = require("./routes/support");
 const bandrollRouter = require("./routes/bandroll");
-const testRouter = require("./routes/test");
+const testRouter = require("./routes/testUI");
 
 app.use("/", indexRouter);
 app.use("/api", apiRouter);
